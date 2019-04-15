@@ -44,7 +44,7 @@ export default function FileInput (props) {
   } = useDropzone({
     accept: 'image/*',
     multiple: false,
-    onDrop: props.onDrop,
+    onDrop: props.dropHandler,
   });
 
   return (

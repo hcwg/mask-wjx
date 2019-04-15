@@ -142,7 +142,7 @@ class App extends Component {
                 {/* File input */}
                 <Grid item xs={12}>
                   <FileInput
-                    onDrop={files => this.handleImageChange(files[0])}
+                    dropHandler={files => this.handleImageChange(files[0])}
                     image={this.state.img}
                   />
                 </Grid>
