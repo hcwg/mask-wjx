@@ -84,8 +84,8 @@ class App extends Component {
         const img = new Image();
         img.src = reader.result;
         img.onload = () => {
-          const width = 400
-          const height = img.height * width / img.width
+          const width = img.width
+          const height = img.height
           this.canvasSource.current.setAttribute('width', width)
           this.canvasSource.current.setAttribute('height', height)
           this.canvasTarget.current.setAttribute('width', width)
