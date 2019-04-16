@@ -17,9 +17,9 @@ const StyledAppBar = styled(AppBar)`
 const TheHeader = () => (
   <StyledAppBar position="static">
     <Grid container>
-      <Grid item md={3} lg={2} />
+      <Grid item lg={1} xl={2} />
 
-      <Grid item md={6} lg={8}>
+      <Grid item xs={12} lg={10} xl={8}>
         <Toolbar>
           <BrandIcon />
 
@@ -29,7 +29,7 @@ const TheHeader = () => (
         </Toolbar>
       </Grid>
 
-      <Grid item md={3} lg={2} />
+      <Grid item lg={1} xl={2} />
     </Grid>
   </StyledAppBar>
 )

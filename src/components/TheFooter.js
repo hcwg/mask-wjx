@@ -13,32 +13,32 @@ const Footer = styled.footer`
   }
 `
 
-const TheFooter = () => (
-  <Footer>
-    <Typography variant="subtitle1" align="center" color="textSecondary" gutterBottom>
-      <span>Authors - </span>
+export default function TheFooter () {
+  return (
+    <Footer>
+      <Typography variant="subtitle1" align="center" color="textSecondary" gutterBottom>
+        <span>Authors - </span>
 
-      <Link href="https://github.com/comzyh" target="_blank" rel="noopener noreferrer" color="textSecondary">
-        @comzyh
-      </Link>
+        <Link href="https://github.com/comzyh" target="_blank" rel="noopener noreferrer" color="textSecondary">
+          @comzyh
+        </Link>
 
-      <span> & </span>
+        <span> & </span>
 
-      <Link href="https://github.com/meteorlxy" target="_blank" rel="noopener noreferrer" color="textSecondary">
-        @meteorlxy
-      </Link>
-    </Typography>
+        <Link href="https://github.com/meteorlxy" target="_blank" rel="noopener noreferrer" color="textSecondary">
+          @meteorlxy
+        </Link>
+      </Typography>
 
-    <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
-      <span>Copyright &copy; </span>
+      <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+        <span>Copyright &copy; </span>
 
-      <Link href="https://github.com/hcwg" target="_blank" rel="noopener noreferrer" color="textSecondary">
-        Happy Coding Wechat Group
-      </Link>
+        <Link href="https://github.com/hcwg" target="_blank" rel="noopener noreferrer" color="textSecondary">
+          Happy Coding Wechat Group
+        </Link>
 
-      <span>. 2019</span>
-    </Typography>
-  </Footer>
-)
-
-export default TheFooter
+        <span>. 2019</span>
+      </Typography>
+    </Footer>
+  )
+}

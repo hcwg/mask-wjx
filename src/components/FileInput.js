@@ -9,10 +9,9 @@ const Container = styled.div`
   align-items: center;
   justify-content:center;
   cursor: pointer;
-  height: ${props => props.image ? 'auto' : '60vh'};
+  height: ${props => props.image ? 'auto' : '70vh'};
   padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin: 10px;
   border-width: 2px;
   border-radius: 2px;
   border-color: ${props => props.isDragActive ? '#2196f3' : '#eeeeee'};
