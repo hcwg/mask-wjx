@@ -56,9 +56,15 @@ class App extends Component {
     this.contextSource = this.canvasSource.current.getContext('2d');
     this.contextTarget = this.canvasTarget.current.getContext('2d');
     this.canvasSource.current.addEventListener('click', (e) => {
-      const x = e.layerX;
-      const y = e.layerY;
-      this.setState({ colorSource: this.contextSource.getImageData(x, y, 1, 1).data });
+      const clientX = e.layerX;
+      const clientY = e.layerY;
+      const clientWidth = e.target.clientWidth
+      const clientHeight = e.target.clientHeight
+      const imageWidth = e.target.width
+      const imageHeigt = e.target.height
+      const imageX = clientX * imageWidth / clientWidth
+      const imageY = clientY * imageHeigt / clientHeight
+      this.setState({ colorSource: this.contextSource.getImageData(imageX, imageY, 1, 1).data });
     })
   }
 
