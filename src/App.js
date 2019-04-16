@@ -15,6 +15,7 @@ const RootGrid = styled(Grid)`
   text-align: center;
   .canvas {
     margin: 10px;
+    max-width: calc(100% - 20px);
     &.source {
       cursor: crosshair;
     }
