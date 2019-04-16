@@ -15,11 +15,11 @@ const Container = styled.div`
   margin-bottom: 10px;
   border-width: 2px;
   border-radius: 2px;
-  border-color: #eeeeee;
+  border-color: ${props => props.isDragActive ? '#2196f3' : '#eeeeee'};
   border-style: dashed;
   background-color: #fafafa;
   font-size: ${props => props.image ? 'auto' : '120%'};
-  color: #bdbdbd;
+  color: ${props => props.isDragActive ? '#2196f3' : '#bdbdbd'};
   outline: none;
   transition: border .24s ease-in-out;
 
