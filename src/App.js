@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
+import Slider from '@material-ui/lab/Slider';
 import TheHeader from './components/TheHeader';
 import TheFooter from './components/TheFooter';
 import FileInput from './components/FileInput';
@@ -18,15 +19,26 @@ const RootGrid = styled(Grid)`
   }
 `
 
+const TolerancePicker = styled(Slider)`
+  padding: 20px;
+  margin: auto;
+  max-width: 200px;
+`
+
+const MaskButton = styled(Button)`
+  margin: 20px;
+`
+
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      colorSource: Uint8ClampedArray.from([0, 0, 0, 100]),
-      colorTarget: Uint8ClampedArray.from([0, 0, 0, 100]),
       img: null,
       width: 0,
       height: 0,
+      colorSource: Uint8ClampedArray.from([0, 0, 0, 255]),
+      colorTarget: Uint8ClampedArray.from([255, 255, 255, 255]),
+      tolerance: 0,
     };
     this.canvasSource = React.createRef();
     this.canvasTarget = React.createRef();
@@ -71,8 +83,8 @@ class App extends Component {
 
   handleMask () {
     const imageData = this.contextSource.getImageData(0, 0, this.state.width, this.state.height)
-    mask(imageData, this.state.colorSource, this.state.colorTarget)
-    this.contextTarget.putImageData(imageData, 0, 0)
+    const imageDataMask = mask(imageData, this.state.colorSource, this.state.colorTarget, this.state.tolerance)
+    this.contextTarget.putImageData(imageDataMask, 0, 0)
   }
 
   render() {
@@ -126,14 +138,26 @@ class App extends Component {
 
                     {/* Mask */}
                     <Grid item xs={12}>
-                      <Button
+                      <p>Color Tolerance: {this.state.tolerance * 100}%</p>
+
+                      <TolerancePicker
+                        value={this.state.tolerance * 100}
+                        min={0}
+                        max={100}
+                        step={5}
+                        onChange={(e, v) => this.setState({ tolerance: v / 100 })}
+                      />
+                      </Grid>
+
+                    <Grid item xs={12}>
+                      <MaskButton
                         variant="contained"
                         color="primary"
                         size="large"
                         onClick={e => this.handleMask(e)}
                       >
                         Mask
-                      </Button>
+                      </MaskButton>
                     </Grid>
                     {/* Mask */}
                   </Grid>
