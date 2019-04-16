@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/lab/Slider';
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import TheHeader from './components/TheHeader';
 import TheFooter from './components/TheFooter';
 import FileInput from './components/FileInput';
@@ -25,14 +27,19 @@ const TolerancePicker = styled(Slider)`
   max-width: 200px;
 `
 
-const MaskButton = styled(Button)`
-  margin: 20px;
+const StyledButton = styled(Button)`
+  margin: 10px;
+`
+
+const DownloadIcon = styled(CloudDownloadIcon)`
+  margin-left: 10px;
 `
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      file: null,
       img: null,
       width: 0,
       height: 0,
@@ -71,7 +78,7 @@ class App extends Component {
           this.contextSource.drawImage(img, 0, 0, width, height);
           this.contextTarget.drawImage(img, 0, 0, width, height);
           const colorSource = this.contextSource.getImageData(0, 0, 1, 1).data
-          this.setState({ img, width, height, colorSource });
+          this.setState({ file, img, width, height, colorSource });
         }
       }
 
@@ -82,14 +89,25 @@ class App extends Component {
   }
 
   handleMask () {
-    const imageData = this.contextSource.getImageData(0, 0, this.state.width, this.state.height)
-    const imageDataMask = mask(imageData, this.state.colorSource, this.state.colorTarget, this.state.tolerance)
-    this.contextTarget.putImageData(imageDataMask, 0, 0)
+    const imageData = this.contextSource.getImageData(0, 0, this.state.width, this.state.height);
+    const imageDataMask = mask(imageData, this.state.colorSource, this.state.colorTarget, this.state.tolerance);
+    this.contextTarget.putImageData(imageDataMask, 0, 0);
+  }
+
+  handleDownload () {
+    const downloadLink = document.createElement('a');
+    downloadLink.href = this.canvasTarget.current.toDataURL(this.state.file.type)
+    downloadLink.download = `mask_${this.state.file.name}`;
+    const clickEvent = document.createEvent('MouseEvents');
+    clickEvent.initEvent('click')
+    downloadLink.dispatchEvent(clickEvent)
   }
 
   render() {
     return (
       <RootGrid container>
+        <CssBaseline />
+
         <Grid item xs={12}>
           <TheHeader />
         </Grid>
@@ -136,7 +154,7 @@ class App extends Component {
                     />
                     {/* Color Picker */}
 
-                    {/* Mask */}
+                    {/* Parameters */}
                     <Grid item xs={12}>
                       <p>Color Tolerance: {this.state.tolerance * 100}%</p>
 
@@ -147,19 +165,35 @@ class App extends Component {
                         step={5}
                         onChange={(e, v) => this.setState({ tolerance: v / 100 })}
                       />
-                      </Grid>
+                    </Grid>
+                    {/* Parameters */}
 
+                    {/* Mask */}
                     <Grid item xs={12}>
-                      <MaskButton
+                      <StyledButton
                         variant="contained"
                         color="primary"
                         size="large"
                         onClick={e => this.handleMask(e)}
                       >
                         Mask
-                      </MaskButton>
+                      </StyledButton>
                     </Grid>
                     {/* Mask */}
+
+                    {/* Download */}
+                    <Grid item xs={12}>
+                      <StyledButton
+                        variant="text"
+                        color="default"
+                        size="large"
+                        onClick={e => this.handleDownload(e)}
+                      >
+                        Download
+                        <DownloadIcon/>
+                      </StyledButton>
+                    </Grid>
+                    {/* Download */}
                   </Grid>
                 </Grid>
               </Grid>
